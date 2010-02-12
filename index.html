@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" manifest="kaltwe.manifest">
+    <head>
+        <title>칼퇴도우미</title>
+        <meta name="author" content="Jaeho Shin &lt;netj@sparcs.org>"/>
+        <meta name="viewport" content="width=device-width, user-scalable=no"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+        <link rel="icon" type="image/png" href="exit.png"/>
+        <link rel="apple-touch-icon" type="image/png" href="exit.png"/>
+        <script type="text/javascript">//<![CDATA[
+            function setCookie(name, value, expiresIn) {
+                var now = new Date();
+                var expires = expiresIn ? new Date(now.getTime() + expiresIn*1000) : null;
+                document.cookie = name + "=" + escape(value) +
+                    (expires ? ";expires=" + expires.toGMTString() : "") +
+                    ";path=" + location.pathname +
+                    ";domain=" + location.host;
+            }
+            function getCookie(name) {
+                var cs = document.cookie.split(';');
+                for (i in cs) {
+                    var pair = cs[i].split('=', 2);
+                    var n = pair[0].replace(/^\s+|\s+$/, '', 'g');
+                    var v = pair[1].replace(/^\s+|\s+$/, '', 'g');
+                    if (n == name) {
+                        return unescape(v);
+                    }
+                }
+                return null;
+            }
+
+            function displayTime(group, h, m) {
+                document.getElementById(group+"H").innerText = h;
+                document.getElementById(group+"M").innerText = (m < 10 ? "0" : "") + m;
+            }
+
+            var beganWork = null;
+            function update() {
+                var workHours = parseInt(document.getElementById("workHours").value);
+                if (document.getElementById("dinnerTime").checked)
+                    workHours += 0.5;
+                // calculate end time
+                var endWork = new Date();
+                endWork.setTime(beganWork.getTime() + (workHours * 3600) * 1000 );
+                displayTime("end", endWork.getHours(), endWork.getMinutes());
+                // calculate remaining/past time
+                var msg;
+                var now = new Date();
+                var s = (endWork.getTime() - now.getTime()) / 1000;
+                if (s > 0) {
+                    document.getElementById("before").style.display = "";
+                    document.getElementById("after").style.display = "none";
+                    msg = "remaining";
+                } else {
+                    s = -s;
+                    document.getElementById("before").style.display = "none";
+                    document.getElementById("after").style.display = "";
+                    msg = "past";
+                }
+                var h = Math.floor(s / 3600);
+                var m = Math.floor(s % 3600 / 60);
+                displayTime(msg, h, m);
+            }
+
+            var isTimestamp = false;
+            function startAt(then, isTimestamp) {
+                // save timestamp for a while
+                setCookie("beganWork", then.getTime(), workHours*3600);
+                setCookie("isTimestamp", isTimestamp, workHours*3600);
+                // update
+                if (isTimestamp)
+                    document.getElementById("timestamp").innerText = then.toLocaleString();
+                else
+                    document.getElementById("timestamp").innerText = "";
+                beganWork = new Date(then);
+                beganWork.setMinutes(Math.ceil(beganWork.getMinutes() / 10) * 10);
+                document.getElementById("beginH").value = beganWork.getHours();
+                document.getElementById("beginM").value = beganWork.getMinutes();
+                update();
+            }
+
+            function startThen() {
+                var beginH = parseInt(document.getElementById("beginH").value);
+                var beginM = parseInt(document.getElementById("beginM").value);
+                var then = new Date();
+                // if given hour is greater, then go back a day
+                if (beginH > then.getHours())
+                    then.setTime(then.getTime() - 86400*1000);
+                then.setHours(beginH);
+                then.setMinutes(beginM);
+                startAt(then, false);
+            }
+
+            function changeSettings() {
+                document.getElementById("workHours").blur();
+                // save settings
+                setCookie("workHours", document.getElementById("workHours").value,     365*24*3600);
+                setCookie("dinnerTime", document.getElementById("dinnerTime").checked, 365*24*3600);
+                // update
+                update();
+            }
+
+            function load() {
+                var wH = document.getElementById("workHours");
+                wH.type = "number";
+                // load settings from cookie
+                var h = getCookie("workHours");
+                if (h) wH.value = h;
+                var d = getCookie("dinnerTime");
+                if (d) document.getElementById("dinnerTime").checked = d == "true";
+                // load beganWork from cookie
+                var t = getCookie("beganWork");
+                if (t)
+                    startAt(new Date(parseInt(t)), getCookie("isTimestamp") == "true");
+                else 
+                    startAt(new Date(), true);
+                setInterval(update, 60 * 1000);
+                // show instructions for adding icon to home
+                if (!navigator.standalone &&
+                        navigator.userAgent.match(/Safari\//) && navigator.userAgent.match(/Mobile\//)) {
+                    alert("iPhone과 iPod touch에서는\n"
+                            + "1. 아랫쪽의 \"+\"를 눌러\n"
+                            + "2. \"홈 화면에 추가\"를 해두시고\n"
+                            + "요긴하게 사용하세요 ㅋ");
+                }
+            }
+        //]]>
+        </script>
+        <style type="text/css">
+            body {
+                background-color: #000;
+                color: #ccc;
+                font-family: sans-serif;
+                font-size: 120%;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                text-align: center;
+            }
+            table {
+                margin: auto;
+            }
+            tr {
+                text-align: center;
+                vertical-align: middle;
+            }
+            #begin, #end {
+                font-size: 120%;
+            }
+            th {
+                font-size: 90%;
+            }
+            #end td {
+                font-weight: bold;
+                font-size: 200%;
+                color: #fc0;
+            }
+            input, select {
+                font-size: inherit;
+            }
+            #message {
+                font-size: 90%;
+                height: 60px;
+            }
+            #remainingTime, #pastTime {
+                font-weight: bold;
+            }
+            #remainingTime {
+                color: #4f8;
+            }
+            #pastTime {
+                color: #f44;
+            }
+            #tool {
+                height: 100px;
+            }
+            button {
+                font-size: 150%;
+            }
+            #timestamp {
+                font-size: 50%;
+            }
+            #settings {
+                font-size: 80%;
+                margin: 10px;
+            }
+            #intro {
+                font-size: 50%;
+                margin-top: 50px;
+            }
+            a {
+                color: #f84;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+
+    <body onload="load();">
+        <table>
+
+            <tr id="begin">
+                <th>출근</th>
+                <td>
+                    <select id="beginH" onchange="startThen();">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option selected="selected">8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                    </select>시
+                    <select id="beginM" onchange="startThen();">
+                        <option>00</option>
+                        <option>10</option>
+                        <option>20</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                </select>분</td>
+            </tr>
+
+            <tr id="end">
+                <th>퇴근</th>
+                <td><span id="endH">?</span>시
+                    <span id="endM">?</span>분
+                </td>
+            </tr>
+
+            <tr id="message">
+                <td colspan="2">
+                    <div id="before">
+                        오늘도
+                        <span id="remainingTime">
+                            <span id="remainingH">?</span>시간
+                            <span id="remainingM">?</span>분</span>만 더 힘내세요!
+                    </div>
+                    <div id="after">
+                        오늘도
+                        <span id="pastTime">
+                            <span id="pastH">?</span>시간
+                            <span id="pastM">?</span>분</span>이나 더 일하셨네요..
+                        수고가 많으십니다 ㅜㅠ
+                    </div>
+                </td>
+            </tr>
+
+            <tr id="tool">
+                <td colspan="2">
+                    <button id="startNow" onclick="startAt(new Date(), true);">방금 출근했어요!</button>
+                    <div id="timestamp"></div>
+                </td>
+            </tr>
+        </table>
+
+        <div id="settings">
+            근로+휴식(점심) <input id="workHours" type="text" value="9" size="1"
+            onfocus="prevWorkHours = this.value; this.value='';"
+            onblur="if (this.value == '') this.value = prevWorkHours;"
+            onchange="changeSettings();"/>시간 기준.
+            <br/>
+            <input id="dinnerTime" type="checkbox" onchange="changeSettings();"/>저녁식사 시간 30분 제외.
+        </div>
+
+        <div id="intro">
+            ※ 노동은 양보다 질이 중요합니다.
+            (
+            읽을거리:
+            <a href="http://h21.hani.co.kr/arti/special/special_general/26739.html" title="월·화·수·목·금금금 그대에게 嫩置步地末考休暇街懶 [눈치보지말고휴가가라]">1</a>
+            <a href="http://h21.hani.co.kr/arti/special/special_general/26737.html" title="옛날 사람들은 날라리야">2</a>
+            )
+            <br/>
+            <a href="http://twitter.com/netj">@netj</a>가 만든
+            <a href="http://github.com/netj/kaltwe/">소스코드</a>를
+            <a href="http://creativecommons.org/licenses/by-sa/2.0/kr/">마음껏 활용</a>하셔도 좋습니다.
+        </div>
+    </body>
+</html>

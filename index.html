@@ -272,12 +272,14 @@
         </table>
 
         <div id="settings">
-            근로+휴식(점심) <input id="workHours" type="text" value="9" size="1"
+            <label for="workHours">근로+휴식(점심)</label>
+            <input id="workHours" type="text" value="9" size="1"
             onfocus="prevWorkHours = this.value; this.value='';"
             onblur="if (this.value == '') this.value = prevWorkHours;"
             onchange="changeSettings();"/>시간 기준.
             <br/>
-            <input id="dinnerTime" type="checkbox" onchange="changeSettings();"/>저녁식사 시간 30분 제외.
+            <input id="dinnerTime" type="checkbox" onchange="changeSettings();"/>
+            <label for="dinnerTime">저녁식사 시간 30분 제외.</label>
         </div>
 
         <div id="intro">

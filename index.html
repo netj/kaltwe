@@ -22,10 +22,11 @@
                 var cs = document.cookie.split(';');
                 for (i in cs) {
                     var pair = cs[i].split('=', 2);
-                    var n = pair[0].replace(/^\s+|\s+$/, '', 'g');
-                    var v = pair[1].replace(/^\s+|\s+$/, '', 'g');
-                    if (n == name) {
-                        return unescape(v);
+                    if (pair.length == 2) {
+                        var n = pair[0].replace(/^\s+|\s+$/, '', 'g');
+                        var v = pair[1].replace(/^\s+|\s+$/, '', 'g');
+                        if (n == name)
+                            return unescape(v);
                     }
                 }
                 return null;

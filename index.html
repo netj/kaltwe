@@ -66,10 +66,13 @@
             }
 
             var isTimestamp = false;
-            function startAt(then, isTimestamp) {
-                // save timestamp for a while
-                setCookie("beganWork", then.getTime(), workHours*3600);
-                setCookie("isTimestamp", isTimestamp, workHours*3600);
+            function startAt(then, isTimestamp, save) {
+                if (save) {
+                    // save timestamp for a while
+                    var workHours = parseInt(document.getElementById("workHours").value);
+                    setCookie("beganWork", then.getTime(), workHours*15/6*3600);
+                    setCookie("isTimestamp", isTimestamp, workHours*15/6*3600);
+                }
                 // update
                 if (isTimestamp)
                     document.getElementById("timestamp").innerText = then.toLocaleString();
@@ -91,7 +94,7 @@
                     then.setTime(then.getTime() - 86400*1000);
                 then.setHours(beginH);
                 then.setMinutes(beginM);
-                startAt(then, false);
+                startAt(then, false, true);
             }
 
             function changeSettings() {
@@ -266,7 +269,7 @@
 
             <tr id="tool">
                 <td colspan="2">
-                    <button id="startNow" onclick="startAt(new Date(), true);">방금 출근했어요!</button>
+                    <button id="startNow" onclick="startAt(new Date(), true, true);">방금 출근했어요!</button>
                     <div id="timestamp"></div>
                 </td>
             </tr>

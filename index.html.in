@@ -325,12 +325,12 @@
         </div>
 
         <div id="intro">
-            <big>칼퇴도우미 1.0</big>
+            <big>칼퇴도우미 @VERSION@</big>
             <br/>
             <a href="http://twitter.com/netj">@netj</a>가 심심해서 만들기
             시작했습니다.
             <br/>
-            <a href="http://github.com/netj/kaltwe/">소스코드</a>를
+            <a href="http://github.com/netj/kaltwe/tree/v@VERSION@">소스코드</a>를
             <a href="http://creativecommons.org/licenses/by-sa/2.0/kr/">마음껏 고쳐 쓰셔도</a> 좋습니다.
             <br/>
         </div>

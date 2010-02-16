@@ -137,10 +137,9 @@
                 background-color: #000;
                 color: #ccc;
                 font-family: sans-serif;
-                font-size: 20px;
+                font-size: 12px;
                 margin: 0px;
-                padding-top: 10px;
-                padding-bottom: 10px;
+                padding: 10px 0px;
                 text-align: center;
                 -webkit-tap-highlight-color: rgba(255,255,0,0.4);
             }
@@ -151,20 +150,15 @@
 
             table {
                 margin: 0px auto;
+                font-size: 24px;
             }
             tr {
                 text-align: center;
                 vertical-align: middle;
             }
-            #begin, #end {
-                font-size: 120%;
-            }
-            th {
-                font-size: 90%;
-            }
             #end td {
                 font-weight: bold;
-                font-size: 200%;
+                font-size: 40px;
                 color: #fc0;
             }
             input, select {
@@ -172,8 +166,8 @@
             }
 
             #message {
-                font-size: 80%;
-                margin: 10px;
+                font-size: 18px;
+                margin: 15px 10px 30px;
             }
             #remainingTime, #pastTime {
                 font-weight: bold;
@@ -186,29 +180,30 @@
             }
 
             #additional {
-                margin: 20px 0px;
+                margin: 25px 0px;
             }
             #tool {
-                margin: 10px;
             }
             button {
-                font-size: 120%;
+                font-size: 28px;
             }
             #timestamp {
-                font-size: 50%;
+                font-size: 10px;
             }
             #ad {
-                margin: 10px 0px;
+                margin: 0px;
                 padding: 0px;
             }
             #settings {
-                font-size: 80%;
-                margin: 10px;
+                font-size: 14px;
             }
 
+            #readings {
+                font-size: 14px;
+                margin: 10px 10px;
+            }
             #intro {
-                font-size: 50%;
-                margin: 10px;
+                margin: 20px 10px 0px;
             }
         </style>
     </head>
@@ -317,7 +312,7 @@
             </div>
         </div>
 
-        <div id="intro">
+        <div id="readings">
             중요한 것은 일한 시간보다 성과입니다.
             <br/>
             <a href="http://h21.hani.co.kr/arti/special/special_general/26737.html"
@@ -327,11 +322,17 @@
                 [눈치보지말고휴가가라]">그만 떠나십시오.</a>
             <br/>
             <a href="http://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy">All work and no play makes Jack a dull boy.</a>
+        </div>
+
+        <div id="intro">
+            <big>칼퇴도우미 1.0</big>
             <br/>
+            <a href="http://twitter.com/netj">@netj</a>가 심심해서 만들기
+            시작했습니다.
             <br/>
-            <a href="http://twitter.com/netj">@netj</a>가 만든
             <a href="http://github.com/netj/kaltwe/">소스코드</a>를
-            <a href="http://creativecommons.org/licenses/by-sa/2.0/kr/">마음껏 활용</a>하셔도 좋습니다.
+            <a href="http://creativecommons.org/licenses/by-sa/2.0/kr/">마음껏 고쳐 쓰셔도</a> 좋습니다.
+            <br/>
         </div>
     </body>
 </html>

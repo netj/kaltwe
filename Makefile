@@ -2,16 +2,17 @@
 # Author: Jaeho Shin <netj@sparcs.org>
 # Created: 2010-02-13
 
-VERSION=1.0
+VERSION=1.0.1
 
-FILES=$(shell find * -type f | grep -Ev '^(Makefile|index.html|.*.manifest)$$')
+FILESCMD=find * -type f | grep -Ev '^(Makefile|index\.html|.*\.(in|manifest))$$'
+FILES=$(shell $(FILESCMD))
 
 all: index.html kaltwe.manifest
 
-%: %.in
+%: %.in Makefile
 	sed <$< >$@ 's/@VERSION@/$(VERSION)/g'
 
 kaltwe.manifest: Makefile index.html $(FILES)
 	echo CACHE MANIFEST >$@
 	echo "# Updated: `date +%FT%T%:z`" >>$@
-	echo "$(FILES)" >>$@
+	$(FILESCMD) >>$@

@@ -2,3 +2,4 @@ NETWORK:
 # load AdSense when online
 http://pagead2.googlesyndication.com/
 http://googleads.g.doubleclick.net/
+data:image/png

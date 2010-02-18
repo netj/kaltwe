@@ -113,7 +113,7 @@
                 onchange="changeSettings();">시간 기준.
                 <br>
                 <input id="dinnerTime" type="checkbox" onchange="changeSettings();">
-                <label for="dinnerTime">저녁식사 시간 30분 제외.</label>
+                <label for="dinnerTime">저녁식사 시간 30분 포함.</label>
             </div>
         </div>
 

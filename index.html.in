@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" manifest="kaltwe.manifest">
+<!DOCTYPE html>
+<html manifest="kaltwe.manifest">
     <head>
         <title>칼퇴도우미</title>
-        <meta name="author" content="Jaeho Shin &lt;netj@sparcs.org>"/>
-        <meta name="viewport" content="width=device-width, user-scalable=no"/>
-        <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-        <link rel="icon" type="image/png" href="exit.png"/>
-        <link rel="apple-touch-icon" type="image/png" href="exit.png"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="author" content="Jaeho Shin &lt;netj@sparcs.org>">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="icon" type="image/png" href="exit.png">
+        <link rel="apple-touch-icon" type="image/png" href="exit.png">
         <script type="text/javascript">//<![CDATA[
             function setCookie(name, value, expiresIn) {
                 var now = new Date();
@@ -305,34 +305,34 @@
                 <input id="workHours" type="text" value="9" size="1"
                 onfocus="prevWorkHours = this.value; this.value='';"
                 onblur="if (this.value == '') this.value = prevWorkHours;"
-                onchange="changeSettings();"/>시간 기준.
-                <br/>
-                <input id="dinnerTime" type="checkbox" onchange="changeSettings();"/>
+                onchange="changeSettings();">시간 기준.
+                <br>
+                <input id="dinnerTime" type="checkbox" onchange="changeSettings();">
                 <label for="dinnerTime">저녁식사 시간 30분 제외.</label>
             </div>
         </div>
 
         <div id="readings">
             중요한 것은 일한 시간보다 성과입니다.
-            <br/>
+            <br>
             <a href="http://h21.hani.co.kr/arti/special/special_general/26737.html"
                 title="옛날 사람들은 날라리야">누구보다도 열심히 일한 당신</a>
             <a href="http://h21.hani.co.kr/arti/special/special_general/26739.html"
                 title="월·화·수·목·금금금 그대에게 嫩置步地末考休暇街懶
                 [눈치보지말고휴가가라]">그만 떠나십시오.</a>
-            <br/>
+            <br>
             <a href="http://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy">All work and no play makes Jack a dull boy.</a>
         </div>
 
         <div id="intro">
-            <big>칼퇴도우미 @VERSION@</big>
-            <br/>
+            <strong>칼퇴도우미 @VERSION@</strong>
+            <br>
             <a href="http://twitter.com/netj">@netj</a>가 심심해서 만들기
             시작했습니다.
-            <br/>
+            <br>
             <a href="http://github.com/netj/kaltwe/tree/v@VERSION@">소스코드</a>를
             <a href="http://creativecommons.org/licenses/by-sa/2.0/kr/">마음껏 고쳐 쓰셔도</a> 좋습니다.
-            <br/>
+            <br>
         </div>
     </body>
 </html>

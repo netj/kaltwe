@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html manifest="kaltwe.manifest">
+    <head>
+        <title>칼퇴도우미</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="author" content="Jaeho Shin &lt;netj@sparcs.org>">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="icon" type="image/png" href="exit.png">
+        <link rel="apple-touch-icon" type="image/png" href="exit.png">
+        <link rel="stylesheet" type="text/css" href="kaltwe.css">
+        <script type="text/javascript" src="kaltwe.js"></script>
+    </head>
+
+    <body onload="load();">
+        <table>
+
+            <tr id="begin">
+                <th>출근</th>
+                <td>
+                    <select id="beginH" onchange="startThen();">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option selected="selected">8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                    </select>시
+                    <select id="beginM" onchange="startThen();">
+                        <option>00</option>
+                        <option>10</option>
+                        <option>20</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                </select>분</td>
+            </tr>
+
+            <tr id="end">
+                <th>퇴근</th>
+                <td><span id="endH">?</span>시
+                    <span id="endM">?</span>분
+                </td>
+            </tr>
+        </table>
+
+        <div id="message">
+            <div id="countdown" style="display:none;">
+                <img id="logo" src="exit.png" alt="칼퇴"/><span
+                    id="countdownTime"><span id="countdownSgn">-</span><span
+                        id="countdownM">??</span>:<span
+                        id="countdownS">??</span>.<span
+                        id="countdownMS">???</span></span>
+            </div>
+            <div id="remaining" style="display:none;">
+                오늘도
+                <span id="remainingTime" class="remainingTime">
+                    <span id="remainingH">?</span>시간
+                    <span id="remainingM">?</span>분</span>만 더 힘내세요!
+            </div>
+            <div id="prepare" style="display:none;" class="prepareTime">
+                이제 곧 퇴근입니다, 준비하세요!
+            </div>
+            <div id="escape" style="display:none;" class="escapeTime">
+                자, 이제 그만 퇴근하세요!
+            </div>
+            <div id="past" style="display:none;">
+                오늘도
+                <span id="pastTime" class="pastTime">
+                    <span id="pastH">?</span>시간
+                    <span id="pastM">?</span>분</span>이나 더 일하셨네요..
+                수고가 많으십니다 ㅜㅠ
+            </div>
+        </div>
+
+        <div id="additional">
+            <div id="tool">
+                <div id="timestamp"></div>
+                <button id="startNow" onclick="startAt(new Date(), true, true);">방금 출근했어요!</button>
+            </div>
+
+            <div id="ad">
+                <script type="text/javascript"><!--
+                    window.googleAfmcRequest = {
+                            client: 'ca-mb-pub-0680558334811626',
+                            ad_type: 'text_image',
+                            output: 'html',
+                            channel: '4260972483',
+                            format: '320x50_mb',
+                            oe: 'utf8',
+                            color_border: '000000',
+                            color_bg: '000000',
+                            color_link: 'FFFFFF',
+                            color_text: 'CCCCCC',
+                            color_url: '999999',
+                        };
+                        //--></script>
+                <script type="text/javascript" 
+                    src="http://pagead2.googlesyndication.com/pagead/show_afmc_ads.js"></script>
+            </div>
+
+            <div id="settings">
+                <label for="workHours">근로+휴식(점심)</label>
+                <input id="workHours" type="text" value="9" size="1"
+                onfocus="prevWorkHours = this.value; this.value='';"
+                onblur="if (this.value == '') this.value = prevWorkHours;"
+                onchange="changeSettings();">시간 기준.
+                <br>
+                <input id="dinnerTime" type="checkbox" onchange="changeSettings();">
+                <label for="dinnerTime">저녁식사 시간 30분 포함.</label>
+            </div>
+        </div>
+
+        <div id="readings">
+            중요한 것은 일한 시간보다 성과입니다.
+            <br>
+            <a href="http://h21.hani.co.kr/arti/special/special_general/26737.html"
+                title="옛날 사람들은 날라리야">누구보다도 열심히 일한 당신</a>
+            <a href="http://h21.hani.co.kr/arti/special/special_general/26739.html"
+                title="월·화·수·목·금금금 그대에게 嫩置步地末考休暇街懶
+                [눈치보지말고휴가가라]">그만 떠나십시오.</a>
+            <br>
+            <a href="http://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy">All work and no play makes Jack a dull boy.</a>
+        </div>
+
+        <div id="intro">
+            <strong>칼퇴도우미 1.1</strong>
+            <br>
+            <a href="http://twitter.com/netj">@netj</a>가 심심해서 만들기
+            시작했습니다.
+            <br>
+            <a href="http://github.com/netj/kaltwe/tree/v1.1">소스코드</a>를
+            <a href="http://creativecommons.org/licenses/by-sa/2.0/kr/">마음껏 고쳐 쓰셔도</a> 좋습니다.
+            <br>
+        </div>
+    </body>
+</html>

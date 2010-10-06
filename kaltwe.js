@@ -7,6 +7,9 @@
  * ( http://creativecommons.org/licenses/by-sa/2.0/kr/ )
  */
 
+var CountdownThreshold = 5 * 60 * 1000;
+var CountdownUpdatePeriod = 47;
+
 function setCookie(name, value, expiresIn) {
     var now = new Date();
     var expires = expiresIn ? new Date(now.getTime() + expiresIn*1000) : null;
@@ -29,38 +32,101 @@ function getCookie(name) {
     return null;
 }
 
-function displayTime(group, h, m) {
-    document.getElementById(group+"H").innerHTML = h;
-    document.getElementById(group+"M").innerHTML = (m < 10 ? "0" : "") + m;
+function displayDeltaT(group, deltaT) {
+    var sgn = -deltaT;
+    var deltaT = Math.abs(deltaT);
+    var ms = deltaT % 1000;
+    var s = Math.floor(deltaT / 1000);
+    var m = Math.floor(s % 3600 / 60);
+    var h = Math.floor(s / 3600);
+    s %= 60;
+    displayTime(group, h, m, s, ms, sgn);
+}
+
+function displayTime(group, h, m, s, ms, sgn) {
+    function prefix0(n) {
+        return 
+    }
+    function display(suffix, html) {
+        var e = document.getElementById(group+suffix);
+        if (e != null)
+            e.innerHTML = html;
+    }
+    display("Sgn", sgn >= 0 ? "+" : "-");
+    display("H", h);
+    display("M", (m < 10 ? "0" : "") + m);
+    display("S", (s < 10 ? "0" : "") + s);
+    display("MS", (ms < 10 ? "00" : ms < 100 ? "0" : "") + ms);
 }
 
 var beganWork = null;
-function update() {
+var endWork = null;
+function updateAbsoluteDisplay() {
     var workHours = parseInt(document.getElementById("workHours").value);
     if (document.getElementById("dinnerTime").checked)
         workHours += 0.5;
     // calculate end time
-    var endWork = new Date();
+    endWork = new Date();
     endWork.setTime(beganWork.getTime() + (workHours * 3600) * 1000 );
-    displayTime("end", endWork.getHours(), endWork.getMinutes());
-    // calculate remaining/past time
-    var msg;
-    var now = new Date();
-    var s = (endWork.getTime() - now.getTime()) / 1000;
-    if (s > 0) {
-        document.getElementById("before").style.display = "";
-        document.getElementById("after").style.display = "none";
-        msg = "remaining";
-    } else {
-        s = -s;
-        document.getElementById("before").style.display = "none";
-        document.getElementById("after").style.display = "";
-        msg = "past";
-    }
-    var h = Math.floor(s / 3600);
-    var m = Math.floor(s % 3600 / 60);
-    displayTime(msg, h, m);
+    displayTime("end", endWork.getHours(), endWork.getMinutes(), endWork.getSeconds());
 }
+
+var msg = null;
+var countdownInterval = null;
+var updateRelativeDisplayInterval = null;
+function updateRelativeDisplay(deltaT, s) {
+    // determine block to display
+    function switchTo(group) {
+        msg = group;
+        var groups = [ "remaining", "prepare", "escape", "past" ]
+        for (var i in groups) {
+            var g = groups[i];
+            document.getElementById(g).style.display = group == g ? "" : "none";
+        }
+        document.getElementById("countdown").className = group + "Time";
+    }
+    if (deltaT == null) {
+        deltaT = endWork.getTime() - new Date().getTime();
+        s = Math.floor(deltaT / 1000);
+    }
+    if (60 <= s && msg != "remaining") {
+        switchTo("remaining");
+    } else if (0 <= s && s < 60 && msg != "prepare") {
+        switchTo("prepare");
+    } else if (-60 <= s && s < 0 && msg != "escape") {
+        switchTo("escape");
+    } else if (s < -60 && msg != "past") {
+        switchTo("past");
+    }
+    // display
+    displayDeltaT(msg, deltaT);
+    // manage countdown
+    if (deltaT < CountdownThreshold) {
+        if (countdownInterval == null) {
+            document.getElementById("countdown").style.display = "";
+            countdownInterval = setInterval(updateCountdownDisplay, CountdownUpdatePeriod);
+            updateRelativeDisplayInterval = clearInterval(updateRelativeDisplayInterval);
+        }
+    } else {
+        if (countdownInterval != null) {
+            document.getElementById("countdown").style.display = "none";
+            countdownInterval = clearInterval(countdownInterval);
+            updateRelativeDisplayInterval = setInterval(updateRelativeDisplay, 60 * 1000);
+        }
+    }
+}
+
+var countdownLastS = null;
+function updateCountdownDisplay() {
+    var deltaT = endWork.getTime() - new Date().getTime();
+    displayDeltaT("countdown", deltaT);
+    var s = Math.floor(deltaT / 1000);
+    if (s != countdownLastS) {
+        updateRelativeDisplay(deltaT, s);
+        countdownLastS = s;
+    }
+}
+
 
 var isTimestamp = false;
 function startAt(then, isTimestamp, save) {
@@ -79,7 +145,8 @@ function startAt(then, isTimestamp, save) {
     beganWork.setMinutes(Math.ceil(beganWork.getMinutes() / 10) * 10);
     document.getElementById("beginH").value = beganWork.getHours();
     document.getElementById("beginM").value = beganWork.getMinutes();
-    update();
+    updateAbsoluteDisplay();
+    updateRelativeDisplay();
 }
 
 function startThen() {
@@ -100,7 +167,8 @@ function changeSettings() {
     setCookie("workHours", document.getElementById("workHours").value,     365*24*3600);
     setCookie("dinnerTime", document.getElementById("dinnerTime").checked, 365*24*3600);
     // update
-    update();
+    updateAbsoluteDisplay();
+    updateRelativeDisplay();
 }
 
 function load() {
@@ -117,7 +185,7 @@ function load() {
         startAt(new Date(parseInt(t)), getCookie("isTimestamp") == "true", false);
     else 
         startAt(new Date(), true, true);
-    setInterval(update, 60 * 1000);
+    updateRelativeDisplayInterval = setInterval(updateRelativeDisplay, 60 * 1000);
     // show instructions for adding icon to home
     if (!navigator.standalone &&
             navigator.userAgent.match(/Safari\//) && navigator.userAgent.match(/Mobile\//)) {

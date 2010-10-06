@@ -30,10 +30,9 @@ tr {
     text-align: center;
     vertical-align: middle;
 }
-#end td {
+#end td, #escape {
     font-weight: bold;
     font-size: 40px;
-    color: #fc0;
 }
 input, select {
     font-size: inherit;
@@ -43,13 +42,23 @@ input, select {
     font-size: 18px;
     margin: 15px 10px 30px;
 }
-#remainingTime, #pastTime {
+#logo {
+    height: 28px;
+}
+#countdown {
+    margin: 24px;
+    font-size: 36px;
+}
+#remainingTime, #pastTime, #countdown {
     font-weight: bold;
 }
-#remainingTime {
+.remainingTime {
     color: #4f8;
 }
-#pastTime {
+#end td, .prepareTime, .escapeTime {
+    color: #fc0;
+}
+.pastTime {
     color: #f44;
 }
 

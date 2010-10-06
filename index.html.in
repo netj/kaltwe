@@ -64,15 +64,28 @@
         </table>
 
         <div id="message">
-            <div id="before" style="display:none;">
+            <div id="countdown" style="display:none;">
+                <img id="logo" src="exit.png" alt="칼퇴"/><span
+                    id="countdownTime"><span id="countdownSgn">-</span><span
+                        id="countdownM">??</span>:<span
+                        id="countdownS">??</span>.<span
+                        id="countdownMS">???</span></span>
+            </div>
+            <div id="remaining" style="display:none;">
                 오늘도
-                <span id="remainingTime">
+                <span id="remainingTime" class="remainingTime">
                     <span id="remainingH">?</span>시간
                     <span id="remainingM">?</span>분</span>만 더 힘내세요!
             </div>
-            <div id="after" style="display:none;">
+            <div id="prepare" style="display:none;" class="prepareTime">
+                이제 곧 퇴근입니다, 준비하세요!
+            </div>
+            <div id="escape" style="display:none;" class="escapeTime">
+                자, 이제 그만 퇴근하세요!
+            </div>
+            <div id="past" style="display:none;">
                 오늘도
-                <span id="pastTime">
+                <span id="pastTime" class="pastTime">
                     <span id="pastH">?</span>시간
                     <span id="pastM">?</span>분</span>이나 더 일하셨네요..
                 수고가 많으십니다 ㅜㅠ

@@ -40,7 +40,7 @@ input, select {
 
 #message {
     font-size: 18px;
-    margin: 15px 10px 30px;
+    margin: 15px 10px;
 }
 #logo {
     height: 28px;
@@ -63,7 +63,7 @@ input, select {
 }
 
 #additional {
-    margin: 25px 0px;
+    margin: 5px 0px;
 }
 #tool {
 }

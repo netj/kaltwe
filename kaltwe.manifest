@@ -1,10 +1,10 @@
 CACHE MANIFEST
-# Updated: 2010-10-06T18:04:11+09:00
+# Updated: 2011-04-01T21:20:07+09:00
 exit.png
 kaltwe.css
 kaltwe.js
 NETWORK:
-# load AdSense when online
-http://pagead2.googlesyndication.com/
-http://googleads.g.doubleclick.net/
+# load AdMob when online
+http://www.admob.com/
+http://mmv.admob.com/
 data:image/png

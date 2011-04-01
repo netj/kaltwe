@@ -1,5 +1,5 @@
 NETWORK:
-# load AdSense when online
-http://pagead2.googlesyndication.com/
-http://googleads.g.doubleclick.net/
+# load AdMob when online
+http://www.admob.com/
+http://mmv.admob.com/
 data:image/png

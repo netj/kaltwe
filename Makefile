@@ -2,7 +2,7 @@
 # Author: Jaeho Shin <netj@sparcs.org>
 # Created: 2010-02-13
 
-VERSION=1.1.1
+VERSION=1.1.2
 
 FILESCMD=find * -type f | grep -Ev '^(Makefile|index\.html|.*\.(in|manifest))$$'
 FILES=$(shell $(FILESCMD))

@@ -2,4 +2,6 @@ NETWORK:
 # load AdMob when online
 http://www.admob.com/
 http://mmv.admob.com/
+# load google analytics
+http://www.google-analytics.com/
 data:image/png
